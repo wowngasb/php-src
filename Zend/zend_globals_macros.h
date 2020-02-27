@@ -25,6 +25,10 @@ typedef struct _zend_executor_globals zend_executor_globals;
 typedef struct _zend_php_scanner_globals zend_php_scanner_globals;
 typedef struct _zend_ini_scanner_globals zend_ini_scanner_globals;
 
+
+#define BEGIN_EXTERN_C()
+#define END_EXTERN_C()
+
 BEGIN_EXTERN_C()
 
 /* Compiler */
