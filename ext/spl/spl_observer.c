@@ -115,10 +115,10 @@ void spl_SplObjectStorage_free_storage(zend_object *object) /* {{{ */
 
 } /* }}} */
 
-static int spl_object_storage_get_hash(zend_hash_key *key, spl_SplObjectStorage *intern, zval *this, zval *obj) {
+static int spl_object_storage_get_hash(zend_hash_key *key, spl_SplObjectStorage *intern, zval *that, zval *obj) {
 	if (intern->fptr_get_hash) {
 		zval rv;
-		zend_call_method_with_1_params(this, intern->std.ce, &intern->fptr_get_hash, "getHash", &rv, obj);
+		zend_call_method_with_1_params(that, intern->std.ce, &intern->fptr_get_hash, "getHash", &rv, obj);
 		if (!Z_ISUNDEF(rv)) {
 			if (Z_TYPE(rv) == IS_STRING) {
 				key->key = Z_STR(rv);
@@ -162,11 +162,11 @@ static spl_SplObjectStorageElement* spl_object_storage_get(spl_SplObjectStorage 
 	}
 } /* }}} */
 
-spl_SplObjectStorageElement *spl_object_storage_attach(spl_SplObjectStorage *intern, zval *this, zval *obj, zval *inf) /* {{{ */
+spl_SplObjectStorageElement *spl_object_storage_attach(spl_SplObjectStorage *intern, zval *that, zval *obj, zval *inf) /* {{{ */
 {
 	spl_SplObjectStorageElement *pelement, element;
 	zend_hash_key key;
-	if (spl_object_storage_get_hash(&key, intern, this, obj) == FAILURE) {
+	if (spl_object_storage_get_hash(&key, intern, that, obj) == FAILURE) {
 		return NULL;
 	}
 
@@ -198,11 +198,11 @@ spl_SplObjectStorageElement *spl_object_storage_attach(spl_SplObjectStorage *int
 	return pelement;
 } /* }}} */
 
-static int spl_object_storage_detach(spl_SplObjectStorage *intern, zval *this, zval *obj) /* {{{ */
+static int spl_object_storage_detach(spl_SplObjectStorage *intern, zval *that, zval *obj) /* {{{ */
 {
 	int ret = FAILURE;
 	zend_hash_key key;
-	if (spl_object_storage_get_hash(&key, intern, this, obj) == FAILURE) {
+	if (spl_object_storage_get_hash(&key, intern, that, obj) == FAILURE) {
 		return ret;
 	}
 	if (key.key) {
@@ -215,11 +215,11 @@ static int spl_object_storage_detach(spl_SplObjectStorage *intern, zval *this, z
 	return ret;
 } /* }}}*/
 
-void spl_object_storage_addall(spl_SplObjectStorage *intern, zval *this, spl_SplObjectStorage *other) { /* {{{ */
+void spl_object_storage_addall(spl_SplObjectStorage *intern, zval *that, spl_SplObjectStorage *other) { /* {{{ */
 	spl_SplObjectStorageElement *element;
 
 	ZEND_HASH_FOREACH_PTR(&other->storage, element) {
-		spl_object_storage_attach(intern, this, &element->obj, &element->inf);
+		spl_object_storage_attach(intern, that, &element->obj, &element->inf);
 	} ZEND_HASH_FOREACH_END();
 
 	intern->index = 0;
@@ -376,11 +376,11 @@ static zend_object *spl_SplObjectStorage_new(zend_class_entry *class_type)
 }
 /* }}} */
 
-int spl_object_storage_contains(spl_SplObjectStorage *intern, zval *this, zval *obj) /* {{{ */
+int spl_object_storage_contains(spl_SplObjectStorage *intern, zval *that, zval *obj) /* {{{ */
 {
 	int found;
 	zend_hash_key key;
-	if (spl_object_storage_get_hash(&key, intern, this, obj) == FAILURE) {
+	if (spl_object_storage_get_hash(&key, intern, that, obj) == FAILURE) {
 		return 0;
 	}
 
@@ -514,7 +514,7 @@ SPL_METHOD(SplObjectStorage, removeAll)
 } /* }}} */
 
 /* {{{ proto bool SplObjectStorage::removeAllExcept(SplObjectStorage $os)
- Remove elements not common to both this SplObjectStorage instance and $os */
+ Remove elements not common to both that SplObjectStorage instance and $os */
 SPL_METHOD(SplObjectStorage, removeAllExcept)
 {
 	zval *obj;
