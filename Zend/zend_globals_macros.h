@@ -26,8 +26,10 @@ typedef struct _zend_php_scanner_globals zend_php_scanner_globals;
 typedef struct _zend_ini_scanner_globals zend_ini_scanner_globals;
 
 
+#ifdef CPP_AST_FIXED
 #define BEGIN_EXTERN_C()
 #define END_EXTERN_C()
+#endif
 
 BEGIN_EXTERN_C()
 
