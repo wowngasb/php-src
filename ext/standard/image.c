@@ -36,25 +36,31 @@
 #include "zlib.h"
 #endif
 
+#ifdef CPP_AST_FIXED
+#define CPP_AST_EXTERN extern
+#else
+#define CPP_AST_EXTERN
+#endif
+
 /* file type markers */
-PHPAPI const char php_sig_gif[3] = {'G', 'I', 'F'};
-PHPAPI const char php_sig_psd[4] = {'8', 'B', 'P', 'S'};
-PHPAPI const char php_sig_bmp[2] = {'B', 'M'};
-PHPAPI const char php_sig_swf[3] = {'F', 'W', 'S'};
-PHPAPI const char php_sig_swc[3] = {'C', 'W', 'S'};
-PHPAPI const char php_sig_jpg[3] = {(char) 0xff, (char) 0xd8, (char) 0xff};
-PHPAPI const char php_sig_png[8] = {(char) 0x89, (char) 0x50, (char) 0x4e, (char) 0x47,
+CPP_AST_EXTERN PHPAPI const char php_sig_gif[3] = {'G', 'I', 'F'};
+CPP_AST_EXTERN PHPAPI const char php_sig_psd[4] = {'8', 'B', 'P', 'S'};
+CPP_AST_EXTERN PHPAPI const char php_sig_bmp[2] = {'B', 'M'};
+CPP_AST_EXTERN PHPAPI const char php_sig_swf[3] = {'F', 'W', 'S'};
+CPP_AST_EXTERN PHPAPI const char php_sig_swc[3] = {'C', 'W', 'S'};
+CPP_AST_EXTERN PHPAPI const char php_sig_jpg[3] = {(char) 0xff, (char) 0xd8, (char) 0xff};
+CPP_AST_EXTERN PHPAPI const char php_sig_png[8] = {(char) 0x89, (char) 0x50, (char) 0x4e, (char) 0x47,
                                     (char) 0x0d, (char) 0x0a, (char) 0x1a, (char) 0x0a};
-PHPAPI const char php_sig_tif_ii[4] = {'I','I', (char)0x2A, (char)0x00};
-PHPAPI const char php_sig_tif_mm[4] = {'M','M', (char)0x00, (char)0x2A};
-PHPAPI const char php_sig_jpc[3]  = {(char)0xff, (char)0x4f, (char)0xff};
-PHPAPI const char php_sig_jp2[12] = {(char)0x00, (char)0x00, (char)0x00, (char)0x0c,
+CPP_AST_EXTERN PHPAPI const char php_sig_tif_ii[4] = {'I','I', (char)0x2A, (char)0x00};
+CPP_AST_EXTERN PHPAPI const char php_sig_tif_mm[4] = {'M','M', (char)0x00, (char)0x2A};
+CPP_AST_EXTERN PHPAPI const char php_sig_jpc[3]  = {(char)0xff, (char)0x4f, (char)0xff};
+CPP_AST_EXTERN PHPAPI const char php_sig_jp2[12] = {(char)0x00, (char)0x00, (char)0x00, (char)0x0c,
                                      (char)0x6a, (char)0x50, (char)0x20, (char)0x20,
                                      (char)0x0d, (char)0x0a, (char)0x87, (char)0x0a};
-PHPAPI const char php_sig_iff[4] = {'F','O','R','M'};
-PHPAPI const char php_sig_ico[4] = {(char)0x00, (char)0x00, (char)0x01, (char)0x00};
-PHPAPI const char php_sig_riff[4] = {'R', 'I', 'F', 'F'};
-PHPAPI const char php_sig_webp[4] = {'W', 'E', 'B', 'P'};
+CPP_AST_EXTERN PHPAPI const char php_sig_iff[4] = {'F','O','R','M'};
+CPP_AST_EXTERN PHPAPI const char php_sig_ico[4] = {(char)0x00, (char)0x00, (char)0x01, (char)0x00};
+CPP_AST_EXTERN PHPAPI const char php_sig_riff[4] = {'R', 'I', 'F', 'F'};
+CPP_AST_EXTERN PHPAPI const char php_sig_webp[4] = {'W', 'E', 'B', 'P'};
 
 /* REMEMBER TO ADD MIME-TYPE TO FUNCTION php_image_type_to_mime_type */
 /* PCX must check first 64bytes and byte 0=0x0a and byte2 < 0x06 */
@@ -730,7 +736,7 @@ static struct gfxinfo *php_handle_jp2(php_stream *stream)
 
 /* {{{ tiff constants
  */
-PHPAPI const int php_tiff_bytes_per_format[] = {0, 1, 1, 2, 4, 8, 1, 1, 2, 4, 8, 4, 8};
+CPP_AST_EXTERN PHPAPI const int php_tiff_bytes_per_format[] = {0, 1, 1, 2, 4, 8, 1, 1, 2, 4, 8, 4, 8};
 
 /* uncompressed only */
 #define TAG_IMAGEWIDTH              0x0100

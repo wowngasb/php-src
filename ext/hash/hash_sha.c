@@ -701,6 +701,10 @@ PHP_HASH_API void PHP_SHA256Final(unsigned char digest[32], PHP_SHA256_CTX * con
 /* OM1 */
 #define SHA512_F5(x)			(ROTR64(19, x) ^ ROTR64(61, x) ^ SHR(6, x))
 
+#ifdef CPP_AST_FIXED
+#define L64 UINT64_C
+#endif
+
 static const uint64_t SHA512_K[128] = {
 	L64(0x428a2f98d728ae22), L64(0x7137449123ef65cd), L64(0xb5c0fbcfec4d3b2f), L64(0xe9b5dba58189dbbc),
 	L64(0x3956c25bf348b538), L64(0x59f111f1b605d019), L64(0x923f82a4af194f9b), L64(0xab1c5ed5da6d8118),
@@ -722,6 +726,11 @@ static const uint64_t SHA512_K[128] = {
 	L64(0x06f067aa72176fba), L64(0x0a637dc5a2c898a6), L64(0x113f9804bef90dae), L64(0x1b710b35131c471b),
 	L64(0x28db77f523047d84), L64(0x32caab7b40c72493), L64(0x3c9ebe0a15c9bebc), L64(0x431d67c49c100d4c),
 	L64(0x4cc5d4becb3e42b6), L64(0x597f299cfc657e2a), L64(0x5fcb6fab3ad6faec), L64(0x6c44198c4a475817) };
+
+
+#ifdef CPP_AST_FIXED
+#define L64 INT64_C
+#endif
 
 /* {{{ SHAEncode64
    Encodes input (uint64_t) into output (unsigned char). Assumes len is
@@ -770,6 +779,9 @@ PHP_HASH_API void PHP_SHA384Init(PHP_SHA384_CTX * context)
 	context->count[0] = context->count[1] = 0;
 	/* Load magic initialization constants.
 	 */
+	#ifdef CPP_AST_FIXED
+	#define L64 UINT64_C
+	#endif
 	context->state[0] = L64(0xcbbb9d5dc1059ed8);
 	context->state[1] = L64(0x629a292a367cd507);
 	context->state[2] = L64(0x9159015a3070dd17);
@@ -778,6 +790,9 @@ PHP_HASH_API void PHP_SHA384Init(PHP_SHA384_CTX * context)
 	context->state[5] = L64(0x8eb44a8768581511);
 	context->state[6] = L64(0xdb0c2e0d64f98fa7);
 	context->state[7] = L64(0x47b5481dbefa4fa4);
+	#ifdef CPP_AST_FIXED
+	#define L64 INT64_C
+	#endif
 }
 /* }}} */
 

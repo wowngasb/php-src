@@ -22,6 +22,10 @@
 #define t3 (table+256*2)
 #define t4 (table+256*3)
 
+#ifdef CPP_AST_FIXED
+#define L64 UINT64_C
+#endif
+
 static const uint64_t table[4*256] = {
 	L64(0x02AAB17CF7E90C5E)   /*    0 */,    L64(0xAC424B03E243A8EC)   /*    1 */,
 	L64(0x72CD5BE30DD5FCD3)   /*    2 */,    L64(0x6D019B93F6F97F3A)   /*    3 */,
@@ -536,3 +540,7 @@ static const uint64_t table[4*256] = {
 	L64(0xCD56D9430EA8280E)   /* 1020 */,    L64(0xC12591D7535F5065)   /* 1021 */,
 	L64(0xC83223F1720AEF96)   /* 1022 */,    L64(0xC3A0396F7363A51F)   /* 1023 */,
 };
+
+#ifdef CPP_AST_FIXED
+#define L64 INT64_C
+#endif

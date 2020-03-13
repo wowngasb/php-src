@@ -21,6 +21,10 @@
 
 #define R 10
 
+#ifdef CPP_AST_FIXED
+#define L64 UINT64_C
+#endif
+
 static const uint64_t rc[R + 1] = {
     L64(0x0000000000000000),
     L64(0x1823c6e887b8014f),
@@ -570,5 +574,9 @@ static const uint64_t C7[256] = {
     L64(0xcc17cc2edb85e2cc), L64(0x4215422a57846842), L64(0x985a98b4c22d2c98), L64(0xa4aaa4490e55eda4),
     L64(0x28a0285d88507528), L64(0x5c6d5cda31b8865c), L64(0xf8c7f8933fed6bf8), L64(0x86228644a411c286),
 };
+
+#ifdef CPP_AST_FIXED
+#define L64 INT64_C
+#endif
 
 #endif

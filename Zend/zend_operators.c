@@ -866,7 +866,7 @@ try_again:
 }
 /* }}} */
 
-static zend_always_inline zend_string* __zval_get_string_func(zval *op, zend_bool try) /* {{{ */
+static zend_always_inline zend_string* __zval_get_string_func(zval *op, zend_bool re_try) /* {{{ */
 {
 try_again:
 	switch (Z_TYPE_P(op)) {
@@ -887,7 +887,7 @@ try_again:
 		}
 		case IS_ARRAY:
 			zend_error(E_NOTICE, "Array to string conversion");
-			return (try && UNEXPECTED(EG(exception))) ?
+			return (re_try && UNEXPECTED(EG(exception))) ?
 				NULL : ZSTR_KNOWN(ZEND_STR_ARRAY_CAPITALIZED);
 		case IS_OBJECT: {
 			zval tmp;
@@ -898,7 +898,7 @@ try_again:
 			} else if (Z_OBJ_HT_P(op)->get) {
 				zval *z = Z_OBJ_HT_P(op)->get(op, &tmp);
 				if (Z_TYPE_P(z) != IS_OBJECT) {
-					zend_string *str = try ? zval_try_get_string(z) : zval_get_string(z);
+					zend_string *str = re_try ? zval_try_get_string(z) : zval_get_string(z);
 					zval_ptr_dtor(z);
 					return str;
 				}
@@ -907,7 +907,7 @@ try_again:
 			if (!EG(exception)) {
 				zend_throw_error(NULL, "Object of class %s could not be converted to string", ZSTR_VAL(Z_OBJCE_P(op)->name));
 			}
-			return try ? NULL : ZSTR_EMPTY_ALLOC();
+			return re_try ? NULL : ZSTR_EMPTY_ALLOC();
 		}
 		case IS_REFERENCE:
 			op = Z_REFVAL_P(op);
