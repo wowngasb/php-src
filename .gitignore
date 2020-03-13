@@ -287,3 +287,4 @@ ext/configure.js
 .vscode/
 *.i
 *.ipp
+preprocess.bat
