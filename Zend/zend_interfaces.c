@@ -283,7 +283,7 @@ ZEND_API zend_object_iterator *zend_user_it_get_new_iterator(zend_class_entry *c
 /* }}} */
 
 /* {{{ zend_implement_traversable */
-static int zend_implement_traversable(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_traversable(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	/* check that class_type is traversable at c-level or implements at least one of 'aggregate' and 'Iterator' */
 	uint32_t i;
@@ -309,7 +309,7 @@ static int zend_implement_traversable(zend_class_entry *interface, zend_class_en
 /* }}} */
 
 /* {{{ zend_implement_aggregate */
-static int zend_implement_aggregate(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_aggregate(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	uint32_t i;
 	int t = -1;
@@ -327,7 +327,7 @@ static int zend_implement_aggregate(zend_class_entry *interface, zend_class_entr
 					if (class_type->interfaces[i] == zend_ce_iterator) {
 						zend_error_noreturn(E_ERROR, "Class %s cannot implement both %s and %s at the same time",
 									ZSTR_VAL(class_type->name),
-									ZSTR_VAL(interface->name),
+									ZSTR_VAL(interface_->name),
 									ZSTR_VAL(zend_ce_iterator->name));
 						return FAILURE;
 					}
@@ -369,7 +369,7 @@ static int zend_implement_aggregate(zend_class_entry *interface, zend_class_entr
 /* }}} */
 
 /* {{{ zend_implement_iterator */
-static int zend_implement_iterator(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_iterator(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	zend_class_iterator_funcs *funcs_ptr;
 
@@ -382,7 +382,7 @@ static int zend_implement_iterator(zend_class_entry *interface, zend_class_entry
 			if (class_type->get_iterator == zend_user_it_get_new_iterator) {
 				zend_error_noreturn(E_ERROR, "Class %s cannot implement both %s and %s at the same time",
 							ZSTR_VAL(class_type->name),
-							ZSTR_VAL(interface->name),
+							ZSTR_VAL(interface_->name),
 							ZSTR_VAL(zend_ce_aggregate->name));
 			}
 			return FAILURE;
@@ -425,7 +425,7 @@ static int zend_implement_iterator(zend_class_entry *interface, zend_class_entry
 /* }}} */
 
 /* {{{ zend_implement_arrayaccess */
-static int zend_implement_arrayaccess(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_arrayaccess(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	return SUCCESS;
 }
@@ -507,7 +507,7 @@ ZEND_API int zend_class_unserialize_deny(zval *object, zend_class_entry *ce, con
 /* }}} */
 
 /* {{{ zend_implement_serializable */
-static int zend_implement_serializable(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_serializable(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	if (class_type->parent
 		&& (class_type->parent->serialize || class_type->parent->unserialize)
@@ -525,7 +525,7 @@ static int zend_implement_serializable(zend_class_entry *interface, zend_class_e
 /* }}}*/
 
 /* {{{ zend_implement_countable */
-static int zend_implement_countable(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_countable(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	return SUCCESS;
 }

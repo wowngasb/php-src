@@ -44,14 +44,14 @@ ZEND_API void (*zend_throw_exception_hook)(zval *ex);
 static zend_object_handlers default_exception_handlers;
 
 /* {{{ zend_implement_throwable */
-static int zend_implement_throwable(zend_class_entry *interface, zend_class_entry *class_type)
+static int zend_implement_throwable(zend_class_entry *interface_, zend_class_entry *class_type)
 {
 	if (instanceof_function(class_type, zend_ce_exception) || instanceof_function(class_type, zend_ce_error)) {
 		return SUCCESS;
 	}
 	zend_error_noreturn(E_ERROR, "Class %s cannot implement interface %s, extend %s or %s instead",
 		ZSTR_VAL(class_type->name),
-		ZSTR_VAL(interface->name),
+		ZSTR_VAL(interface_->name),
 		ZSTR_VAL(zend_ce_exception->name),
 		ZSTR_VAL(zend_ce_error->name));
 	return FAILURE;

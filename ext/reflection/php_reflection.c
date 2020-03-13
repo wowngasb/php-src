@@ -4801,9 +4801,9 @@ ZEND_METHOD(reflection_class, getInterfaces)
 		ZEND_ASSERT(ce->ce_flags & ZEND_ACC_LINKED);
 		array_init(return_value);
 		for (i=0; i < ce->num_interfaces; i++) {
-			zval interface;
-			zend_reflection_class_factory(ce->interfaces[i], &interface);
-			zend_hash_update(Z_ARRVAL_P(return_value), ce->interfaces[i]->name, &interface);
+			zval interface_;
+			zend_reflection_class_factory(ce->interfaces[i], &interface_);
+			zend_hash_update(Z_ARRVAL_P(return_value), ce->interfaces[i]->name, &interface_);
 		}
 	} else {
 		RETURN_EMPTY_ARRAY();
@@ -4999,25 +4999,25 @@ ZEND_METHOD(reflection_class, implementsInterface)
 {
 	reflection_object *intern, *argument;
 	zend_class_entry *ce, *interface_ce;
-	zval *interface;
+	zval *interface_;
 
 	GET_REFLECTION_OBJECT_PTR(ce);
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS(), "z", &interface) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "z", &interface_) == FAILURE) {
 		return;
 	}
 
-	switch (Z_TYPE_P(interface)) {
+	switch (Z_TYPE_P(interface_)) {
 		case IS_STRING:
-			if ((interface_ce = zend_lookup_class(Z_STR_P(interface))) == NULL) {
+			if ((interface_ce = zend_lookup_class(Z_STR_P(interface_))) == NULL) {
 				zend_throw_exception_ex(reflection_exception_ptr, 0,
-						"Interface %s does not exist", Z_STRVAL_P(interface));
+						"Interface %s does not exist", Z_STRVAL_P(interface_));
 				return;
 			}
 			break;
 		case IS_OBJECT:
-			if (instanceof_function(Z_OBJCE_P(interface), reflection_class_ptr)) {
-				argument = Z_REFLECTION_P(interface);
+			if (instanceof_function(Z_OBJCE_P(interface_), reflection_class_ptr)) {
+				argument = Z_REFLECTION_P(interface_);
 				if (argument->ptr == NULL) {
 					zend_throw_error(NULL, "Internal error: Failed to retrieve the argument's reflection object");
 					return;

@@ -281,3 +281,10 @@ tmp-php.ini
 !/ext/fileinfo/magicdata.patch
 !/ext/pcre/pcre2lib/config.h
 !/win32/build/Makefile
+
+.vscode/
+*.ci
+*.cipp
+preprocess.bat
+clbuild.bat
+linkbuild.bat
