@@ -285,3 +285,5 @@ tmp-php.ini
 ext/configure.bat
 ext/configure.js
 .vscode/
+*.i
+*.ipp

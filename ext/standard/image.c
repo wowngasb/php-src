@@ -36,6 +36,10 @@
 #include "zlib.h"
 #endif
 
+#ifdef CPP_AST_FIXED
+#define PHPAPI extern
+#endif
+
 /* file type markers */
 PHPAPI const char php_sig_gif[3] = {'G', 'I', 'F'};
 PHPAPI const char php_sig_psd[4] = {'8', 'B', 'P', 'S'};
@@ -55,6 +59,10 @@ PHPAPI const char php_sig_iff[4] = {'F','O','R','M'};
 PHPAPI const char php_sig_ico[4] = {(char)0x00, (char)0x00, (char)0x01, (char)0x00};
 PHPAPI const char php_sig_riff[4] = {'R', 'I', 'F', 'F'};
 PHPAPI const char php_sig_webp[4] = {'W', 'E', 'B', 'P'};
+
+#ifdef CPP_AST_FIXED
+#define PHPAPI
+#endif
 
 /* REMEMBER TO ADD MIME-TYPE TO FUNCTION php_image_type_to_mime_type */
 /* PCX must check first 64bytes and byte 0=0x0a and byte2 < 0x06 */

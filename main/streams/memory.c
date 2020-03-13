@@ -770,6 +770,10 @@ static php_stream * php_stream_url_wrap_rfc2397(php_stream_wrapper *wrapper, con
 	return stream;
 }
 
+#ifdef CPP_AST_FIXED
+#define PHPAPI extern
+#endif
+
 PHPAPI const php_stream_wrapper_ops php_stream_rfc2397_wops = {
 	php_stream_url_wrap_rfc2397,
 	NULL, /* close */
@@ -789,3 +793,7 @@ PHPAPI const php_stream_wrapper php_stream_rfc2397_wrapper =	{
 	NULL,
 	1, /* is_url */
 };
+
+#ifdef CPP_AST_FIXED
+#define PHPAPI
+#endif
